@@ -1,9 +1,10 @@
 import { StateCreator } from "zustand"
 import { getCategories, getRecipies } from "../services/RecipieService"
-import { Categories, SearchFilter } from "../types"
+import { Categories, Drinks, SearchFilter } from "../types"
 
 export type RecipiesSliceType = {
     categories: Categories
+    drinks: Drinks
     fetchCategories: () => Promise<void>
     searchRecipies: (searchFilter: SearchFilter) => Promise<void>
 }
@@ -12,6 +13,7 @@ export const createRecipiesSlice: StateCreator<RecipiesSliceType> = (set)=> ({
     categories: {
         drinks: []
     },
+    drinks: [],
     fetchCategories: async () => {
         const categories = await getCategories()
         set({
@@ -19,6 +21,9 @@ export const createRecipiesSlice: StateCreator<RecipiesSliceType> = (set)=> ({
         })
     },
     searchRecipies: async (filters)=> {
-        await getRecipies(filters)
+        const drinks = await getRecipies(filters)
+        set({
+            drinks
+        })
     }
 })
