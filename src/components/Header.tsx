@@ -10,7 +10,7 @@ export default function Header() {
     })
     const { pathname } = useLocation()
     const isHome = useMemo(()=> pathname==='/', [pathname])
-    const { fetchCategories, categories, searchRecipies } = useAppStore()
+    const { fetchCategories, categories, searchRecipies, showNotification } = useAppStore()
 
     useEffect(()=>{
         fetchCategories()
@@ -26,7 +26,10 @@ export default function Header() {
     const handleSubmit = (e: FormEvent<HTMLFormElement>)=> {
         e.preventDefault()
         if(Object.values(searchFilters).includes('')) {
-            console.log('Los valores son obligatorios')
+            showNotification({
+                text: 'Los valores son obligatorios',
+                error: true
+            })
             return
         }
 

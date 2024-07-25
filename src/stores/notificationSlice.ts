@@ -29,6 +29,16 @@ export const createNotificationSlice : StateCreator<NotificationSliceType & Favo
                 show: true
             }
         })
+
+        setTimeout(()=>{
+            set({
+                notification: {
+                    text: payload.text,
+                    error: payload.error,
+                    show: false
+                }
+            })
+        }, 5000)
     },
     hideNotification: ()=> {
         set({
